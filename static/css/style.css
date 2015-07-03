@@ -1,0 +1,21 @@
+#content {
+	width: 60%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#content h1 {
+	padding-bottom: 20px;
+}
+
+#footer {
+	background-color:black;
+	height:25px;
+	text-align: :right;
+	color:dodgerblue;
+	text-align: center;
+}
+
+#response {
+	margin-top:20px;
+}

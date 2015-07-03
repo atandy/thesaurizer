@@ -23,7 +23,7 @@ def analyze():
         if len(submitted_text) <= 0:
             return render_template('index.html', form=form)
         paragraph = thesaurize.Paragraph(submitted_text)
-
+        span_list = ' '.join(["<span>" + w + "</span>" for w in submitted_text.split()])
         lookup_word_list = paragraph.getLookupWordList()
 
         # iterate through the lookup words and create a list of dict-lists
@@ -36,6 +36,8 @@ def analyze():
         # get the synonyms and do soem stuff here for the paragraph text.
         return render_template('thesaurize.html', 
                                 submitted_text=submitted_text,
+                                span_list=span_list,
+                                lookup_word_list=lookup_word_list,
                                 final_word_map_list=final_word_map_list)
 
 

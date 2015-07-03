@@ -6,9 +6,17 @@
 
 {% block content %}
 	<div id="response" class="form-control">
-		<p>{{submitted_text}}</p>
+		<p>{{span_list | safe }}</p>
 
 	</div>
-	<p>{{final_word_map_list}}</p>
+	
+	{% for word in final_word_map_list %}
+		<ul class="{{word.keys()[0]}} list-unstyled" style="display:none;">
+			{% for synonym in word.values()[0] %}
+				<li> {{synonym}} </li>
+			{% endfor %}
+		</ul>
+		{{word}}
+	{% endfor %}
 {% endblock %}
 
