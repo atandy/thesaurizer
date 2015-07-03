@@ -5,10 +5,23 @@
 {% block header %} {% endblock %}
 
 {% block content %}
-    <form method=post action="/thesaurize" name="paragraph_text">
-        {{ form.paragraph_text }}
-        <input type=submit value=Submit>
-    </form>
+	<h1>
+		Find new words for your boring paragraphs.
+	</h1>
+    <form method="post" action="/analyze" name="paragraph_text" class="form-horizontal">
+		<div class="form-group">
+			
+			<div class="">
+				{{form.paragraph_text(class='form-control',placeholder="Paragraph Text")}}
+			</div>
+		</div>
+		
+		<div class="form-group" style="text-align:center;">
+			<div class="">
+				<button type="submit" class="btn btn-default">Submit</button>
+			</div>
+		</div>
+</form>
 
 {% endblock %}
 
