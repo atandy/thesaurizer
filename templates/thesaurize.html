@@ -11,7 +11,7 @@
 	</div>
 	
 	{% for word in final_word_map_list %}
-		<ul id="replacement-words" class="{{word.keys()[0]}} list-unstyled" style="display:none;">
+		<ul id="replacement-words" name="{{word.keys()[0]}}" class="list-unstyled" style="display:none;">
 			{% for synonym in word.values()[0] %}
 				<li> {{synonym | safe }} </li>
 			{% endfor %}

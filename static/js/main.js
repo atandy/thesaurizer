@@ -3,7 +3,7 @@ $(document).ready(function() {
 	$("#original-paragraph span")
 		.click(function() {
 			word = $(this).text();
-			$("ul." + word).show();
+			$("ul[name=" + word+ "]").show();
 		});
 		/*
 		.mouseout(function(){
@@ -14,6 +14,16 @@ $(document).ready(function() {
 		.click(function() {
 			word = $(this).text();
 			console.log(word);
+			// ew.
+			parent_word = $(this).parent().parent().attr("name");
+
+			orig_spans = $("#original-paragraph span");
+			for (i=0; i < orig_spans.length; i++) {
+				//TODO: replace the parent word with the replacement word
+				if (i.text() == parent_word) {
+					$("#original-paragraph span").text(i).replace(word);
+				}
+			}
 
 			
 		});
