@@ -9,6 +9,7 @@
 		<p>{{orig_span_list | safe }}</p>
 
 	</div>
+	<button id="refresh-paragraph"> Refresh Paragraph</button>
 	
 	{% for word in final_word_map_list %}
 		<ul id="replacement-words" name="{{word.keys()[0]}}" class="list-unstyled" style="display:none;">
