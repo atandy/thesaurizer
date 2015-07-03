@@ -5,18 +5,17 @@
 {% block header %} {% endblock %}
 
 {% block content %}
-	<div id="response" class="form-control">
-		<p>{{span_list | safe }}</p>
+	<div id="original-paragraph" class="form-control">
+		<p>{{orig_span_list | safe }}</p>
 
 	</div>
 	
 	{% for word in final_word_map_list %}
-		<ul class="{{word.keys()[0]}} list-unstyled" style="display:none;">
+		<ul id="replacement-words" class="{{word.keys()[0]}} list-unstyled" style="display:none;">
 			{% for synonym in word.values()[0] %}
-				<li> {{synonym}} </li>
+				<li> {{synonym | safe }} </li>
 			{% endfor %}
 		</ul>
-		{{word}}
 	{% endfor %}
 {% endblock %}
 

@@ -23,7 +23,9 @@ def analyze():
         if len(submitted_text) <= 0:
             return render_template('index.html', form=form)
         paragraph = thesaurize.Paragraph(submitted_text)
-        span_list = ' '.join(["<span>" + w + "</span>" for w in submitted_text.split()])
+        
+            
+        orig_span_list = ' '.join([thesaurize.spanify(w) for w in submitted_text.split()])
         lookup_word_list = paragraph.getLookupWordList()
 
         # iterate through the lookup words and create a list of dict-lists
@@ -31,12 +33,12 @@ def analyze():
         for word in lookup_word_list:
             synonym_dict = {}
             print "checking synonyms for word {}".format(word)
-            synonym_dict[word] = thesaurize.getSynonyms(word)
+            synonym_dict[word] = thesaurize.getSynonyms(word,spanified=True)
             final_word_map_list.append(synonym_dict)
         # get the synonyms and do soem stuff here for the paragraph text.
         return render_template('thesaurize.html', 
                                 submitted_text=submitted_text,
-                                span_list=span_list,
+                                orig_span_list=orig_span_list,
                                 lookup_word_list=lookup_word_list,
                                 final_word_map_list=final_word_map_list)
 

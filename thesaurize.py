@@ -8,13 +8,28 @@ import re
 pass_file = json.loads(open('passwords.json').read())
 API_KEY = pass_file['api_key']
 
+def spanify(word):
+    return "<span>" + word + "</span>"
 
-def getSynonyms(word):
+def getSynonyms(word,spanified=False):
     ''' get synonms for a word from bighugelabs api. 
         return a list of strings of each synonym found '''
     url = "http://words.bighugelabs.com/api/2/{}/{}/".format(API_KEY,word)
+    resp_map_dict = {'syn':'synonym',
+                     'ant':'antonym',
+                     'rel':'related',
+                     'sim':'similar',
+                     'usr':'user_suggested'}
+
     r = requests.get(url)
-    resp = r.text.split('\n')
+    resp = r.text.split('\n')[:-1]
+    for index, row in enumerate(resp):
+        splits = row.split('|')
+        splits[1] = resp_map_dict[splits[1]]
+        if spanified:
+            splits[2] = spanify(splits[2])
+        resp[index] = ' | '.join(splits)
+
     return resp
 
 
@@ -44,11 +59,11 @@ class Paragraph:
             word = tag[0]
             pos = tag[1]
 
-            if len(word) <= 2:
+            if len(word) <= 3:
                 continue
 
             if word == 'very':
-                continue #TODO: remove this? and amke logic for actually checking word that comes afer very
+                continue #TODO: remove this? and make logic for actually checking word that comes afer very
                 very_idx = pos_tags.index(tag)
                 next_word_idx = pos_tags.index(tag) + 1
             
