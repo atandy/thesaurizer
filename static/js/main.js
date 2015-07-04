@@ -16,9 +16,11 @@ $(document).ready(function() {
 
 	// if original word has a ul, then assign text_decorations to it.
 	for (i=0; i<ORIGINAL_WORDS.length; i++) {
+		w = ORIGINAL_WORDS[i].innerHTML
+		w2 = w.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+	
 		try {
-			if ($("ul[name=" + ORIGINAL_WORDS[i].innerHTML + "").length > 0) {
-				// console.log(ORIGINAL_WORDS[i].innerHTML);
+			if ($("ul[name=" + w2 + "]").length > 0) {
 				$(ORIGINAL_WORDS[i]).addClass("linky");
 
 			}
@@ -30,17 +32,18 @@ $(document).ready(function() {
 	
 
 	$("#original-paragraph span").click(function() {
-		//TODO: BUG (when the word is selected here with.text(), it grabs the period.
-			// it then fails the lookup on the selected UL and causes the
-			// error that is being excepted.)
-		word_to_replace = $(this).innerHTML;
+
+		word_to_replace = $(this).text();
+		// remove any punctuation from word so it won't fail ul lookups.
+		word_to_replace = word_to_replace.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+		
 		if (word_to_replace.length <= 3) {
 			return;
 		}
 		try {
-			selected_ul = $("ul[name=" + word_to_replace + "");
+			selected_ul = $("ul[name=" + word_to_replace + "]");
 		} catch (e){
-			console.log("No UL for "+word_to_replace);
+			console.log(e);
 			return
 		}
 		// Hide all uls.. would be better to hide by kind, but this app is 
@@ -57,9 +60,14 @@ $(document).ready(function() {
 		//console.log(replacement_word);
 		// ew.
 		parent_word = $(this).parent().parent().attr("name");
-
+		
 		// for the parent word, get the position from local storage.
 		parent_word_position = localStorage.getItem(parent_word);
+		
+		//TODO: BUG, someimtes the parent_word_position is null, and then
+		// the lookup on the replace fails.
+		console.log(parent_word);
+		console.log(parent_word_position);
 		
 		// replace the word based on its position.
 		$("#original-paragraph span").eq(parent_word_position).html(replacement_word);

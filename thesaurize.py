@@ -30,6 +30,8 @@ def getSynonyms(word, spanified=False):
             splits[2] = spanify(splits[2])
         resp[index] = ' | '.join(splits)
 
+    if len(resp) < 1:
+        resp = ['No results found for this word.']
     return resp
 
 
