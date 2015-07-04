@@ -13,18 +13,36 @@ $(document).ready(function() {
 	} else {
 	    // Sorry! No Web Storage support..
 	}
-	/*
+
+	// if original word has a ul, then assign text_decorations to it.
 	for (i=0; i<ORIGINAL_WORDS.length; i++) {
-		if ($("ul[name=" + ORIGINAL_WORDS[i].innerHTML + "").length > 0 {
-			$("#original-paragraph span");
+		try {
+			if ($("ul[name=" + ORIGINAL_WORDS[i].innerHTML + "").length > 0) {
+				// console.log(ORIGINAL_WORDS[i].innerHTML);
+				$(ORIGINAL_WORDS[i]).addClass("linky");
+
+			}
+		}
+		catch (e) {
+			// silent exception caught here.
 		}
 	}
-	*/
+	
 
 	$("#original-paragraph span").click(function() {
-		
-		word_to_replace = $(this).text();
-		selected_ul = $("ul[name=" + word_to_replace + "");
+		//TODO: BUG (when the word is selected here with.text(), it grabs the period.
+			// it then fails the lookup on the selected UL and causes the
+			// error that is being excepted.)
+		word_to_replace = $(this).innerHTML;
+		if (word_to_replace.length <= 3) {
+			return;
+		}
+		try {
+			selected_ul = $("ul[name=" + word_to_replace + "");
+		} catch (e){
+			console.log("No UL for "+word_to_replace);
+			return
+		}
 		// Hide all uls.. would be better to hide by kind, but this app is 
 		// simple for now...
 		$("ul").hide()
@@ -32,8 +50,6 @@ $(document).ready(function() {
 		$(selected_ul).show();
 		$("#synonym-directions").show()
 		$(selected_ul).addClass('displayed');	
-
-		
 	});
 		
 	$("#replacement-words span").click(function() {
@@ -50,6 +66,7 @@ $(document).ready(function() {
 		
 	});
 	
+	//TODO: Bug - refresh paragraph seems to lose all of the ul information.
 	function refreshParagraph() {
 		$("#original-paragraph p").html(localStorage.getItem("original_paragraph"));
 		$("ul").hide()

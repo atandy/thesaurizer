@@ -30,8 +30,7 @@ h3#directions {
 }
 
 #original-paragraph span {
-	cursor: pointer;
-	cursor: hand;
+	
 }
 
 button#refresh-paragraph {
@@ -52,4 +51,10 @@ ul#replacement-words {
 }
 #synonym-directions {
 	display:none;
+}
+
+.linky {
+	cursor: pointer;
+	cursor: hand;
+	text-decoration: underline;
 }

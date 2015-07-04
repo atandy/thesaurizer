@@ -11,7 +11,7 @@ API_KEY = pass_file['api_key']
 def spanify(word):
     return "<span>" + word + "</span>"
 
-def getSynonyms(word,spanified=False):
+def getSynonyms(word, spanified=False):
     ''' get synonms for a word from bighugelabs api. 
         return a list of strings of each synonym found '''
     url = "http://words.bighugelabs.com/api/2/{}/{}/".format(API_KEY,word)
