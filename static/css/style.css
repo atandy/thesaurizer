@@ -7,6 +7,13 @@
 #content h1 {
 	padding-bottom: 20px;
 }
+h3#directions {
+	width:80%;
+	float:right;
+}
+#header {
+	padding-left: 20px
+}
 
 #footer {
 	background-color:black;
@@ -17,5 +24,32 @@
 }
 
 #original-paragraph {
-	margin-top:20px;
+	float: right;
+	height: 100%;
+	width: 80%;
+}
+
+#original-paragraph span {
+	cursor: pointer;
+	cursor: hand;
+}
+
+button#refresh-paragraph {
+	display:inline-block;
+	float:left;
+}
+
+ul#replacement-words {
+}
+
+.clearfix {
+  overflow: auto;
+}
+
+#synonym-section {
+	width:80%;
+	float:right;
+}
+#synonym-directions {
+	display:none;
 }
