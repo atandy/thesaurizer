@@ -1,38 +1,34 @@
 $(document).ready(function() {
-	//TODO: handle errors for words that don't have a hiden div.
+	
 	ORIGINAL_PARAGRAPH =  $("#original-paragraph p").html();
 	ORIGINAL_WORDS = $("#original-paragraph p span");
 
+	// TODO: Handle what to do if no local storage for browser.
 	if(typeof(Storage) !== "undefined") {
 	    // Code for localStorage/sessionStorage.
 	    localStorage.setItem("original_paragraph", ORIGINAL_PARAGRAPH);
 
 	    for (i=0; i < ORIGINAL_WORDS.length; i++) {
-			localStorage.setItem(ORIGINAL_WORDS[i].innerHTML, i.toString());
+	    	w = ORIGINAL_WORDS[i].innerHTML;
+	    	w2 = w.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+			localStorage.setItem(w2, i.toString());
+			try {
+				if ($("ul[name=" + w2 + "]").length > 0) {
+					$(ORIGINAL_WORDS[i]).addClass("linky");
+				}
+			}
+			catch (e) {
+			// silent exception caught here.
+			}
 		}	
 	} else {
 	    // Sorry! No Web Storage support..
 	}
-
-	// if original word has a ul, then assign text_decorations to it.
-	for (i=0; i<ORIGINAL_WORDS.length; i++) {
-		w = ORIGINAL_WORDS[i].innerHTML
-		w2 = w.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
 	
-		try {
-			if ($("ul[name=" + w2 + "]").length > 0) {
-				$(ORIGINAL_WORDS[i]).addClass("linky");
-
-			}
-		}
-		catch (e) {
-			// silent exception caught here.
-		}
-	}
-	
-
+	// Handle clicks on words from original paragraph.
 	$("#original-paragraph span").click(function() {
-
+		// TODO: BUG, once a word has been replaced, you can't bring up the 
+		// replacement UL, because it's trying to look up a UL that doesn't exist.
 		word_to_replace = $(this).text();
 		// remove any punctuation from word so it won't fail ul lookups.
 		word_to_replace = word_to_replace.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
@@ -55,6 +51,7 @@ $(document).ready(function() {
 		$(selected_ul).addClass('displayed');	
 	});
 		
+	// Handle clicks on replacement words (synonyms)
 	$("#replacement-words span").click(function() {
 		replacement_word = $(this).text();
 		//console.log(replacement_word);
@@ -63,11 +60,6 @@ $(document).ready(function() {
 		
 		// for the parent word, get the position from local storage.
 		parent_word_position = localStorage.getItem(parent_word);
-		
-		//TODO: BUG, someimtes the parent_word_position is null, and then
-		// the lookup on the replace fails.
-		console.log(parent_word);
-		console.log(parent_word_position);
 		
 		// replace the word based on its position.
 		$("#original-paragraph span").eq(parent_word_position).html(replacement_word);
@@ -86,6 +78,3 @@ $(document).ready(function() {
 	})
 
 });
-
-/* grab the words and their positions from the original paragraph.
-log the positions for each word. */

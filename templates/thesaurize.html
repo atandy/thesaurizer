@@ -15,9 +15,9 @@
 	</button>
 	<div class="clearfix"></div>
 	<div id="synonym-section">
-		<h3 id="synonym-directions" style="display:none;">
+		<h4 id="synonym-directions" style="display:none;">
 			Click on a synonym to replace it in your sentence.
-		</h3>
+		</h4>
 		{% for word in final_word_map_list %}
 			<ul id="replacement-words" name="{{word.keys()[0]}}" class="list-unstyled" style="display:none;">
 				{% for synonym in word.values()[0] %}
