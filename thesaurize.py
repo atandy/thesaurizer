@@ -4,8 +4,10 @@ from nltk import pos_tag
 import json
 import requests
 import re
+import os
 
-pass_file = json.loads(open('passwords.json').read())
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+pass_file = json.loads(open(APP_DIR+'/passwords.json').read())
 API_KEY = pass_file['api_key']
 
 def spanify(word):

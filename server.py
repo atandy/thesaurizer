@@ -2,9 +2,11 @@ from flask import Flask, render_template, request, url_for
 import forms
 import json
 import thesaurize
+import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = json.loads(open('passwords.json').read())['SECRET_KEY']
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+app.config['SECRET_KEY'] = json.loads(open(APP_DIR+'/passwords.json').read())['SECRET_KEY']
 
 @app.route('/', methods=['GET','POST'])
 def index():
