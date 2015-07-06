@@ -1,32 +1,36 @@
 $(document).ready(function() {
 	
-	ORIGINAL_PARAGRAPH =  $("#original-paragraph p").html();
-	ORIGINAL_WORDS = $("#original-paragraph p span");
+	function setLocalStorage() {
+		ORIGINAL_PARAGRAPH =  $("#original-paragraph p").html();
+		ORIGINAL_WORDS = $("#original-paragraph p span");
 
-	// TODO: Handle what to do if no local storage for browser.
-	if(typeof(Storage) !== "undefined") {
-	    // Code for localStorage/sessionStorage.
-	    localStorage.setItem("original_paragraph", ORIGINAL_PARAGRAPH);
+		// TODO: Handle what to do if no local storage for browser.
+		if(typeof(Storage) !== "undefined") {
+		    // Code for localStorage/sessionStorage.
+		    localStorage.setItem("original_paragraph", ORIGINAL_PARAGRAPH);
 
-	    for (i=0; i < ORIGINAL_WORDS.length; i++) {
-	    	w = ORIGINAL_WORDS[i].innerHTML;
-	    	w2 = w.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-			localStorage.setItem(w2, i.toString());
-			try {
-				if ($("ul[name=" + w2 + "]").length > 0) {
-					$(ORIGINAL_WORDS[i]).addClass("linky");
+		    for (i=0; i < ORIGINAL_WORDS.length; i++) {
+		    	w = ORIGINAL_WORDS[i].innerHTML;
+		    	w2 = w.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+				localStorage.setItem(w2, i.toString());
+				try {
+					if ($("ul[name=" + w2 + "]").length > 0) {
+						$(ORIGINAL_WORDS[i]).addClass("linky");
+					}
 				}
-			}
-			catch (e) {
-			// silent exception caught here.
-			}
-		}	
-	} else {
-	    // Sorry! No Web Storage support..
+				catch (e) {
+				// silent exception caught here.
+				}
+			}	
+		} else {
+		    // Sorry! No Web Storage support..
+		}
 	}
 	
+	setLocalStorage()
+
 	// Handle clicks on words from original paragraph.
-	$("#original-paragraph span").click(function() {
+	$("#original-paragraph").on('click', 'span', function() {
 		// TODO: BUG, once a word has been replaced, you can't bring up the 
 		// replacement UL, because it's trying to look up a UL that doesn't exist.
 		word_to_replace = $(this).text();
@@ -47,8 +51,11 @@ $(document).ready(function() {
 		$("ul").hide()
 		$("#synonym-directions").hide()
 		$(selected_ul).show();
-		$("#synonym-directions").show()
-		$(selected_ul).addClass('displayed');	
+		if ( $(this).hasClass('linky') ) {
+			$("#synonym-directions").show()
+			$(selected_ul).addClass('displayed');		
+		}
+		
 	});
 		
 	// Handle clicks on replacement words (synonyms)
@@ -69,6 +76,7 @@ $(document).ready(function() {
 	//TODO: Bug - refresh paragraph seems to lose all of the ul information.
 	function refreshParagraph() {
 		$("#original-paragraph p").html(localStorage.getItem("original_paragraph"));
+		setLocalStorage()
 		$("ul").hide()
 		$("#synonym-directions").hide()
 	}
