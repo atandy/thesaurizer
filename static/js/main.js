@@ -61,7 +61,6 @@ $(document).ready(function() {
 	// Handle clicks on replacement words (synonyms)
 	$("#replacement-words span").click(function() {
 		replacement_word = $(this).text();
-		//console.log(replacement_word);
 		// ew.
 		parent_word = $(this).parent().parent().attr("name");
 		
@@ -73,7 +72,6 @@ $(document).ready(function() {
 		
 	});
 	
-	//TODO: Bug - refresh paragraph seems to lose all of the ul information.
 	function refreshParagraph() {
 		$("#original-paragraph p").html(localStorage.getItem("original_paragraph"));
 		setLocalStorage()

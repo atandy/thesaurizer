@@ -17,11 +17,10 @@ def index():
 def analyze():
     
     form = forms.ParagraphForm()
-    #TODO fix form validation..
+    
     if request.method == 'POST':
-        print form
         submitted_text = request.form['paragraph_text']
-        #TODO: fix vtemplate validation.
+        #TODO: fix template validation.
         if len(submitted_text) <= 0:
             return render_template('index.html', form=form)
         paragraph = thesaurize.Paragraph(submitted_text)
@@ -34,16 +33,14 @@ def analyze():
         final_word_map_list = []
         for word in lookup_word_list:
             synonym_dict = {}
-            print "checking synonyms for word {}".format(word)
             synonym_dict[word] = thesaurize.getSynonyms(word,spanified=True)
             final_word_map_list.append(synonym_dict)
-        # get the synonyms and do soem stuff here for the paragraph text.
+        
         return render_template('thesaurize.html', 
                                 submitted_text=submitted_text,
                                 orig_span_list=orig_span_list,
                                 lookup_word_list=lookup_word_list,
                                 final_word_map_list=final_word_map_list)
-
 
 
 if __name__ == '__main__':

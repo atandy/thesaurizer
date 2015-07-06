@@ -56,9 +56,9 @@ class Paragraph:
         # Wh-adverb(WRB), modal auxiliary(MD)
         ignore_pos_tags = ['IN','CC','DT','EX','VBD','WRB','MD']
         #TODO: add back Adverbs? (RB)
-        lookup_word_list = []
-        # iterate through tags, and grab words to look up 
         
+        # iterate through tags, and grab words to look up 
+        lookup_word_list = []
         for tag in pos_tags:
             word = tag[0]
             pos = tag[1]
