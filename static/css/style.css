@@ -1,5 +1,5 @@
 #content {
-	width: 60%;
+	width: 50%;
 	margin: 0 auto;
 	text-align: center;
 }
@@ -27,6 +27,7 @@ h3#directions {
 	float: right;
 	height: 100%;
 	width: 80%;
+	height: 100%;
 }
 
 #original-paragraph span {
@@ -36,6 +37,7 @@ h3#directions {
 button#refresh-paragraph {
 	display:inline-block;
 	float:left;
+	height: 52px;
 }
 
 ul#replacement-words {
@@ -57,4 +59,9 @@ ul#replacement-words {
 	cursor: pointer;
 	cursor: hand;
 	text-decoration: underline;
+}
+
+
+.submitter {
+	margin-top: 10px
 }
